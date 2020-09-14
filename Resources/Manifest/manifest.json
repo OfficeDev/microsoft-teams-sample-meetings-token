@@ -1,0 +1,71 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json",
+  "manifestVersion": "devPreview",
+  "version": "1.0.0",
+  "id": "[MicrosoftAppId]",
+  "packageName": "com.microsoft.teams.sample.meetingtoken",
+  "webApplicationInfo": {
+    "id": "[MicrosoftAppId]",
+    "resource": "api://[WebAppDomain]"
+  },
+  "developer": {
+    "name": "[companyName]",
+    "websiteUrl": "[websiteUrl]",
+    "privacyUrl": "[privacyUrl]",
+    "termsOfUseUrl": "[termsOfUseUrl]"
+  },
+  "name": {
+    "short": "Meeting Token",
+    "full": "Meeting Token"
+  },
+  "description": {
+    "short": "Meeting token app",
+    "full": "Token app to generate sequential tokens for paticipants"
+  },
+  "icons": {
+    "outline": "icon-outline.png",
+    "color": "icon-color.png"
+  },
+  "accentColor": "#ffffff",
+  "configurableTabs": [
+    {
+      "configurationUrl": "https://[WebAppDomain]/configure.html",
+      "canUpdateConfiguration": true,
+      "scopes": [
+        "groupchat"
+      ],
+      "meetingSurfaces": [ "sidePanel"]
+    }
+  ],
+  "permissions": [
+    "identity",
+    "messageTeamMembers"
+  ],
+  "validDomains": [
+    "[WebAppDomain]"
+  ],
+  "bots": [
+    {
+      "botId": "[MicrosoftAppId]",
+      "scopes": [
+        "groupchat"
+      ],
+      "needsChannelSelector": false,
+      "isNotificationOnly": false,
+      "supportsFiles": false,
+      "commandLists": [
+        {
+          "scopes": [
+            "groupchat"
+          ],
+          "commands": [
+            {
+              "title": "reset",
+              "description": "reset the settings for the bot in the service"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
