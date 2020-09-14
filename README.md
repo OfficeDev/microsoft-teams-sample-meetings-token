@@ -1,7 +1,7 @@
-﻿# TokenApp
+# Meeting Token Generator
 
 ## Summary
-The Meeting Token app is a Microsoft Teams app that extends meetings in Teams.  
+The Meeting Token Generator app is a Microsoft Teams app that extends meetings in Teams.  
 The app is intended to be used during a meeting where a participant will request a token (generated sequentially) in the meeting, so that each participant has a fair opportunity to interact. This can be useful in scrum meetings, Q&A sessions, etc.
 
 ### Key features
@@ -137,3 +137,17 @@ The app uses in-memory store to maintain token information and serviceurl. In th
 - [.NET Core CLI tools](https://docs.microsoft.com/en-us/dotnet/core/tools/?tabs=netcore2x)
 - [Azure CLI](https://docs.microsoft.com/cli/azure/?view=azure-cli-latest)
 - [Azure Portal](https://portal.azure.com)
+
+# Contributing
+
+This project welcomes contributions and suggestions.  Most contributions require you to agree to a
+Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
+the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+
+When you submit a pull request, a CLA bot will automatically determine whether you need to provide
+a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
+provided by the bot. You will only need to do this once across all repos using our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
+For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
+contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
