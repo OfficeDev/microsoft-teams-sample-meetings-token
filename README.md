@@ -66,14 +66,14 @@ We assume working knowledge of the following technologies to gain full understan
 ### Add the following entry to the manifest.json ([schema reference](https://docs.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema))
   - Set `manifestVersion` to "devPreview"
   - Add a configurableTabs section with 
-    - `"meetingSurfaces": [ "sidePanel" ]`
     - `"scopes": [ "groupchat" ]`
+    - `"context": [ "meetingChatTab", "meetingDetailsTab", "meetingSidePanel" ]`
   - Add your bot configuration, with the app id of the bot generated from the previous steps
   - Add the following webApplicationInfo section to the manifest, use MicrosoftAppId and WebAppDomain defined above.
     ```json
     "webApplicationInfo": {  
       "id": "[MicrosoftAppId]",  
-      "resource": "api://[WebAppDomainName]"  
+      "resource": "api://[WebAppDomainName]/[MicrosoftAppId]"  
     }
     ```
 - To run the app in debug mode press F5 in visual studio/VS Code.

@@ -1,19 +1,17 @@
 import React, { Component, Fragment } from 'react';
-import * as microsoftTeams from "@microsoft/teams-js";
 import "regenerator-runtime/runtime.js";   //to enable the use of async
 
-import TokenActionButtons from './Components/TokenActionButtons';
-import TokenIndicator from './Components/TokenIndicator';
-import UserList from './Components/UserList';
-import ErrorMessageBar from './Components/ErrorMessageBar';
+import TokenActionButtons from '../Components/TokenActionButtons';
+import TokenIndicator from '../Components/TokenIndicator';
+import UserList from '../Components/UserList';
+import ErrorMessageBar from '../Components/ErrorMessageBar';
 
-import MeetingServiceProvider from './Context/MeetingServiceProvider';
-import StatusRefresher from './Components/StatusRefresher';
-import Constants from './Constants';
+import MeetingServiceProvider, { withMeetingTokenService } from '../Context/MeetingServiceProvider';
+import StatusRefresher from '../Components/StatusRefresher';
+import Constants from '../Constants';
 
-microsoftTeams.initialize();
 
-class App extends Component {
+class SidePanel extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -78,28 +76,26 @@ class App extends Component {
     render() {
         return (
             <Fragment>
-                <MeetingServiceProvider>
-                    <StatusRefresher onStatusRefresh={this.onStatusRefresh} />
-                    <div className="app-container">
-                        <ErrorMessageBar msg={this.state.error.msg} show={this.state.error.status} />
-                        <TokenIndicator show={true} value={this.state.participants.length && this.state.currentToken} title={"Current Token"} />
-                        <TokenActionButtons isOrganizer={this.state.user.isOrganizer}
-                            onGetToken={this.onGetToken}
-                            onAckToken={this.onAckToken}
-                            onSkipToken={this.onSkipToken}
-                            onUserInfoFetched={this.onUserInfoFetched}
-                            showTokenButton={!this.state.userToken.number}
-                            showDoneButton={!!this.state.userToken.number}
-                            showSkipButton={!!this.state.participants.length}
-                        />
-                        <TokenIndicator
-                            value={this.state.userToken.number}
-                            show={!!this.state.userToken.number}
-                            title={`Your Token: ${this.state.userToken.status}`}
-                        />
-                    </div>
-                    <UserList items={this.state.participants} />
-                </MeetingServiceProvider>
+                <StatusRefresher onStatusRefresh={this.onStatusRefresh} />
+                <div className="app-container">
+                    <ErrorMessageBar msg={this.state.error.msg} show={this.state.error.status} />
+                    <TokenIndicator show={true} value={this.state.participants.length && this.state.currentToken} title={"Current Token"} />
+                    <TokenActionButtons isOrganizer={this.state.user.isOrganizer}
+                        onGetToken={this.onGetToken}
+                        onAckToken={this.onAckToken}
+                        onSkipToken={this.onSkipToken}
+                        onUserInfoFetched={this.onUserInfoFetched}
+                        showTokenButton={!this.state.userToken.number}
+                        showDoneButton={!!this.state.userToken.number}
+                        showSkipButton={!!this.state.participants.length}
+                    />
+                    <TokenIndicator
+                        value={this.state.userToken.number}
+                        show={!!this.state.userToken.number}
+                        title={`Your Token: ${this.state.userToken.status}`}
+                    />
+                </div>
+                <UserList items={this.state.participants} />
             </Fragment>
         );
     }
@@ -123,4 +119,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default withMeetingTokenService(SidePanel);

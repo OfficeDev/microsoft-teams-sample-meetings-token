@@ -8,5 +8,11 @@ export default Object.freeze({
         timeout: 10000,
     },
     MeetingTokenStatus,
-    MeetingRoles
+    MeetingRoles,
+    FrameContexts: Object.freeze({
+        PreMeeting: "content",
+        SidePanel: "sidePanel",
+        Initializing: "initializing",
+        Unknown: "unknown",
+    })
 })

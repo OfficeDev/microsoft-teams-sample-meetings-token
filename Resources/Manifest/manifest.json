@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json",
+  "$schema": "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json",
   "manifestVersion": "devPreview",
   "version": "1.0.0",
   "id": "[MicrosoftAppId]",
@@ -15,12 +15,11 @@
     "termsOfUseUrl": "[termsOfUseUrl]"
   },
   "name": {
-    "short": "Meeting Token",
-    "full": "Meeting Token"
+    "short": "Meeting Token App"
   },
   "description": {
-    "short": "Meeting token app",
-    "full": "Token app to generate sequential tokens for paticipants"
+    "short": "Meeting Token App",
+    "full": "Token app optimized for meetings to generate sequential tokens for paticipants"
   },
   "icons": {
     "outline": "icon-outline.png",
@@ -34,7 +33,11 @@
       "scopes": [
         "groupchat"
       ],
-      "meetingSurfaces": [ "sidePanel"]
+      "context": [
+        "meetingChatTab",
+        "meetingDetailsTab",
+        "meetingSidePanel"
+      ]
     }
   ],
   "permissions": [

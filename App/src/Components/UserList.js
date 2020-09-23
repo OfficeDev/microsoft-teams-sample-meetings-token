@@ -6,7 +6,7 @@ class TokenActionButtons extends Component {
     
     markIfOrganizer(item) {
         if(item.UserInfo.Role.MeetingRole === Constants.MeetingRoles.Organizer) {
-            return `${item.UserInfo.Name}(${item.UserInfo.Role.MeetingRole})`
+            return `${item.UserInfo.Name} (${item.UserInfo.Role.MeetingRole})`
         }
         return `${item.UserInfo.Name}`
     }
