@@ -112,6 +112,7 @@
         <script src="https://statics.teams.microsoft.com/sdk/v1.7.0/js/MicrosoftTeams.min.js"></script>
         <script>
             microsoftTeams.initialize();
+            microsoftTeams.appInitialization.notifySuccess();
             microsoftTeams.settings.registerOnSaveHandler(function (saveEvent) {
                 microsoftTeams.settings.setSettings({
                     entityID: "Meeting Token App",
@@ -120,6 +121,7 @@
                     websiteUrl: `${window.location.origin}/index.html`,
                 });
                 saveEvent.notifySuccess();
+                // microsoftTeams.appInitialization.notifyAppLoaded();
             });
             microsoftTeams.settings.setValidityState(true);
         </script>

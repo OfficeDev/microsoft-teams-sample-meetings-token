@@ -9,10 +9,9 @@ export default Object.freeze({
     },
     MeetingTokenStatus,
     MeetingRoles,
-    FrameContexts: Object.freeze({
+    Surfaces: Object.freeze({
         PreMeeting: "content",
         SidePanel: "sidePanel",
-        Initializing: "initializing",
         Unknown: "unknown",
     })
 })

@@ -48,7 +48,7 @@ namespace TokenApp
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.Authority = "https://login.microsoftonline.com/common";
-                options.Audience = this.Configuration["AzureAd:ApplicationIdUri"];
+                options.Audience = this.Configuration["AzureAd:ApplicationId"];
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = false,

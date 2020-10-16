@@ -6,7 +6,7 @@ import TokenIndicator from '../Components/TokenIndicator';
 import UserList from '../Components/UserList';
 import ErrorMessageBar from '../Components/ErrorMessageBar';
 
-import MeetingServiceProvider, { withMeetingTokenService } from '../Context/MeetingServiceProvider';
+import { withMeetingTokenService } from '../Context/MeetingServiceProvider';
 import StatusRefresher from '../Components/StatusRefresher';
 import Constants from '../Constants';
 
@@ -43,8 +43,10 @@ class SidePanel extends Component {
             this.setError(msg);
             return;
         }
+
+        const { AadObjectId, Name, Role: { MeetingRole }} = msg.UserInfo;
         this.setState({
-            user: { oid: msg.UserInfo.AadObjectId, name: msg.UserInfo.Name, isOrganizer: msg.UserInfo.Role.MeetingRole === Constants.MeetingRoles.Organizer },
+            user: { oid: AadObjectId, name: Name, isOrganizer: MeetingRole === Constants.MeetingRoles.Organizer },
             userToken: { number: msg.TokenNumber, status: msg.Status || Constants.MeetingTokenStatus.NotUsed },
             error: this.clearErrorFactory()
         });
@@ -67,8 +69,9 @@ class SidePanel extends Component {
             this.setError(msg);
             return;
         }
+        const { AadObjectId, Name, Role: { MeetingRole }} = msg;
         this.setState({
-            user: { oid: msg.AadObjectId, name: msg.Name, isOrganizer: msg.Role.MeetingRole === Constants.MeetingRoles.Organizer },
+            user: { oid: AadObjectId, name: Name, isOrganizer: MeetingRole === Constants.MeetingRoles.Organizer },
             error: this.clearErrorFactory()
         });
     }

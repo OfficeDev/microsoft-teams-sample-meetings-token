@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text } from '@fluentui/react';
+import { Text } from '@fluentui/react/lib/Text';
 
 class TokenIndicator extends Component {
     render() {

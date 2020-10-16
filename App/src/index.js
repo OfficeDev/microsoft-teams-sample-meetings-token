@@ -6,5 +6,4 @@ import MeetingTokenApp from './Containers/MeetingTokenApp';
 import "./style.css";
 
 microsoftTeams.initialize();
-
 ReactDOM.render(<MeetingTokenApp />, document.getElementById('root'));

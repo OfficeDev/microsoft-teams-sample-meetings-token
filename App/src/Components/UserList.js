@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List,Label } from '@fluentui/react';
+import { List } from '@fluentui/react/lib/List';
 import Constants from '../Constants';
 
 class TokenActionButtons extends Component {

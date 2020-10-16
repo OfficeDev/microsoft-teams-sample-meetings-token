@@ -1,12 +1,25 @@
 import React, { Component } from 'react';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { withMeetingTokenService } from '../Context/MeetingServiceProvider';
+import { async } from 'regenerator-runtime';
 
 class SkipCurrentTokenButton extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            disabled: false,
+        };
+    }
+
     skipToken = async () => {
         const { meetingTokenService } = this.props;
-        const data = await meetingTokenService.skipTokenAsync();
-        this.props.onSkipToken(data);
+        this.setState({ disabled: true });
+        const serviceCall = async () => {
+            const data = await meetingTokenService.skipTokenAsync();
+            this.setState({ disabled: false });
+            this.props.onSkipToken(data);
+        }
+        await serviceCall();
     }
 
     async componentDidMount() {
@@ -22,7 +35,7 @@ class SkipCurrentTokenButton extends Component {
             <div className="flex-center" >
                 {this.props.isOrganizer ?
                     (
-                        <PrimaryButton style={{ margin: 10, backgroundColor:"darkred", borderColor:"darkred" }} title="Move current token to next" onClick={this.skipToken}>
+                        <PrimaryButton disabled={this.state.disabled} style={{ margin: 10, backgroundColor:"#CC4A31", borderColor:"#CC4A31" }} title="Move current token to next" onClick={this.skipToken}>
                             Skip
                         </PrimaryButton>
                     ) : null

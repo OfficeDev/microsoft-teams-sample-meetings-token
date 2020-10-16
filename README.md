@@ -54,14 +54,15 @@ We assume working knowledge of the following technologies to gain full understan
 
 ## To try this sample
 
-### [Register your bot using bot channel registration in Azure AD portal and add authentication](https://docs.microsoft.com/en-us/microsoftteams/platform/bots/how-to/authentication/add-authentication?tabs=dotnet%2Cdotnet-sample), save the application (client) ID  and client secret, as this will be required for bot service calls
+- [Register your bot using bot channel registration in Azure AD portal and add authentication](https://docs.microsoft.com/en-us/microsoftteams/platform/bots/how-to/authentication/add-authentication?tabs=dotnet%2Cdotnet-sample), save the application (client) ID  and client secret, as this will be required for bot service calls
+- [Use the bot app service registration to setup the tab sso](https://docs.microsoft.com/en-us/microsoftteams/platform/tabs/how-to/authentication/auth-aad-sso) (required for user auth from tab app)
 - Set up the appsettings.json with the following keys  
   `"MicrosoftAppId"`: Application(client) ID of your bot service app registered in previous step  
   `"MicrosoftAppPassword"`: client secret of your bot channel registered in the previous step,  
-  `"AzureAd"."TenantId"`: Tenant Id of the tenant where the app is deployed. 
-  `"AzureAd"."ApplicationIdUri "`: Application id uri value from app registration.
+  `"AzureAd"."TenantId"`: Tenant Id of the tenant where the app is deployed.  
+  `"AzureAd"."ApplicationId "`: Application id value from app registration. in this instance same as `MicrosoftAppId`  
   `"ContentBubbleUrl "`: Content bubble iframe url (default. `https://[WebAppDomain]/contentBubble.html`).
--  For testing, start an ngrok session and use the ngrok domain as value for the `WebAppDomainName`. Make sure you update the same in manifest.json, appsettings.json, Azure bot registration endpoint and tab app registration.
+-  For testing, start an ngrok session and use the ngrok domain as value for the `WebAppDomainName`. Make sure you update the same in manifest.json, appsettings.json, Azure bot registration endpoint and bot app service registration.
   
 ### Add the following entry to the manifest.json ([schema reference](https://docs.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema))
   - Set `manifestVersion` to "devPreview"
