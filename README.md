@@ -1,8 +1,7 @@
 # Meeting Token Generator
 
-## Summary
-The Meeting Token Generator app is a Microsoft Teams app that extends meetings in Teams.  
-The app is intended to be used during a meeting where a participant will request a token (generated sequentially) in the meeting, so that each participant has a fair opportunity to interact. This can be useful in scrum meetings, Q&A sessions, etc.
+The Meeting Token Generator app is a sample Microsoft Teams app that extends meetings in Teams.
+Through this app, meeting participants can request a "token", which is generated sequentially so that each participant has a fair opportunity to interact. This can be useful in situations like scrum meetings, Q&A sessions, etc.
 
 ### Key features
  - Display the current token that is being serviced in the meeting
@@ -10,121 +9,119 @@ The app is intended to be used during a meeting where a participant will request
  - Generate a token for the user upon request
  - Display the current user's token number
  - Mark a token as done by the user
- - Ability to skip the current token for the organizer of the meeting
- - App is optimized for the side panel viewport size
+ - Skip the current token for the organizer of the meeting
   
-### User interactions [Screenshot](#screenshot)
-- Token - button to generate the token for the user
-- Done - Acknowledge the the user is done with the token.
-- Skip(Only in Organizer view) - skip the current and move to next.
+### User interactions
+- **Token** - Requests a token for the user
+- **Done** - Acknowledges that the user is done with the token
+- **Skip** - Skips the current user and moves on to the next person in line for a token. This button is only shown to users with the meeting Organizer role.
 
 ## Prerequisites
 
 ### Tools
 
 - [.NET Core SDK](https://dotnet.microsoft.com/download) version 3.1
-
   ```bash
   # determine dotnet version
   dotnet --version
   ```
 
 - [Nodejs](https://nodejs.org/en/download/) version 10.21.0+ (use the LTS version)
-
   ```bash
   # determine dotnet version
   node --version
   ```
 
 - [Ngrok](https://ngrok.com/download) (Only for devbox testing) Latest (any other tunneling software can also be used)
-
   ```bash
-  # determine dotnet version
-  node --version
+  # run ngrok locally
+  ngrok http -host-header=localhost 3978
   ```
 
 ### Technologies
 
 We assume working knowledge of the following technologies to gain full understanding of the app
-
 - [C#](https://docs.microsoft.com/en-us/dotnet/csharp/tutorials/)
 - [ECMAScript6](http://es6-features.org/)
 - [Asp.NET core](https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-3.1) version 3.1
-- [React.JS](https://reactjs.org/tutorial/tutorial.html) version 16+  
+- [React.JS](https://reactjs.org/tutorial/tutorial.html) version 16+ 
 
-## To try this sample
+The app uses the Teams extensibility features described on the following pages:
+- [Apps in Teams meetings](https://docs.microsoft.com/en-us/microsoftteams/platform/apps-in-teams-meetings/teams-apps-in-meetings)
+- [Create apps for Teams meetings](https://docs.microsoft.com/en-us/microsoftteams/platform/apps-in-teams-meetings/create-apps-for-teams-meetings?tabs=json)
+- [Tab single sign-on](https://docs.microsoft.com/en-us/microsoftteams/platform/tabs/how-to/authentication/auth-aad-sso) to get the identity of the user accessing the tab, in a way that can be verified in the server APIs
 
-- [Register your bot using bot channel registration in Azure AD portal and add authentication](https://docs.microsoft.com/en-us/microsoftteams/platform/bots/how-to/authentication/add-authentication?tabs=dotnet%2Cdotnet-sample), save the application (client) ID  and client secret, as this will be required for bot service calls
-- [Use the bot app service registration to setup the tab sso](https://docs.microsoft.com/en-us/microsoftteams/platform/tabs/how-to/authentication/auth-aad-sso) (required for user auth from tab app)
-- Set up the appsettings.json with the following keys  
-  `"MicrosoftAppId"`: Application(client) ID of your bot service app registered in previous step  
-  `"MicrosoftAppPassword"`: client secret of your bot channel registered in the previous step,  
-  `"AzureAd"."TenantId"`: Tenant Id of the tenant where the app is deployed.  
-  `"AzureAd"."ApplicationId "`: Application id value from app registration. in this instance same as `MicrosoftAppId`  
-  `"ContentBubbleUrl "`: Content bubble iframe url (default. `https://[WebAppDomain]/contentBubble.html`).
--  For testing, start an ngrok session and use the ngrok domain as value for the `WebAppDomainName`. Make sure you update the same in manifest.json, appsettings.json, Azure bot registration endpoint and bot app service registration.
+## Running the sample
+
+### Step 1: Register Azure AD applications
+1. Start an ngrok session as indicated above. Note the ngrok domain, as you will use this in the registration steps below, where it will be the value of `WebAppDomain`.
+1. Register your bot using bot channel registration in Azure AD portal, following the instructions [here](Wiki/azure-bot-channels-registration.md).
+1. Update the AAD app registration for tab SSO, following the  instructions [here](Wiki/auth-aad-sso.md). The "fully qualified domain name" in the instructions will be your ngrok domain.
+1. Set up the appsettings.json with the following keys:
+    - `"MicrosoftAppId"`: Application (client) ID of the bot's Azure AD application
+    - `"MicrosoftAppPassword"`: client secret of the bot's Azure AD application
+    - `"AzureAd"."TenantId"`: Tenant ID of the tenant where the app will be used. Note that the sample will only work in this tenant.
+    - `"AzureAd"."ApplicationId "`: Set to the same value as `MicrosoftAppId` above.
+    - `"ContentBubbleUrl "`: Content bubble iframe url (default. `https://[WebAppDomain]/contentBubble.html`). Remember that `[WebAppDomain]` will be your ngrok domain, so the content bubble URL will be similar to `https://f631****.ngrok.io/contentBubble.html`.
   
-### Add the following entry to the manifest.json ([schema reference](https://docs.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema))
-  - Set `manifestVersion` to "devPreview"
-  - Add a configurableTabs section with 
-    - `"scopes": [ "groupchat" ]`
-    - `"context": [ "meetingChatTab", "meetingDetailsTab", "meetingSidePanel" ]`
-  - Add your bot configuration, with the app id of the bot generated from the previous steps
-  - Add the following webApplicationInfo section to the manifest, use MicrosoftAppId and WebAppDomain defined above.
+### Step 2: Add the following entry to the manifest.json ([schema reference](https://docs.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema))
+1. Set `manifestVersion` to "devPreview"
+1. Add your bot configuration, with the app id of the bot generated from the previous steps
+1. Fill-in the following `webApplicationInfo` section, using `MicrosoftAppId` and `WebAppDomain` values from the previous section.
     ```json
     "webApplicationInfo": {  
       "id": "[MicrosoftAppId]",  
       "resource": "api://[WebAppDomainName]/[MicrosoftAppId]"  
     }
     ```
-- To run the app in debug mode press F5 in visual studio/VS Code.
 
-### Build the client app
-  - Navigate to the `App` folder in a terminal
-  - Run `npm install`
-  - Run `npm run build` to build the app. 
+### Step 3: Build the client app
+1. Navigate to the `App` folder in a terminal
+2. Run `npm install`
+3. Run `npm run build` to build the app. 
   
   This generates the dist folder inside the app where the assets will generated/copied. The server will serve the static files from this location.
 
-### Build the services
-  - Build and Run the server, choose option A or B.  
-    A) From a terminal
-    - In a terminal, navigate to `TokenApp` folder
-    ```bash
-    # run the server
-    cd TokenApp
-    dotnet run
-    ```
+### Step 4: Build and run the service
+You can build and run the project from the command line or an IDE:
 
-    B) Or from Visual Studio
-    - Launch Visual Studio
-    - File -> Open -> Project/Solution
-    - Navigate to `TokenApp` folder
-    - Select `TokenApp.csproj` file
-    - Press `F5` to run the project
+A) From a command line:
+  ```bash
+  # run the server
+  cd TokenApp
+  dotnet run
+  ```
 
-### Sideload the app
-  - Create a .zip using the below files(found in {AppRoot}/Resources/Manifest)
-    - manifest.json
-    - icon-outline.png
-    - icon-color.png
-  - Create a meeting with few test participants, ideally with a mix of Presenters and Attendees.
-  - Once meeting is created, go to the meeting details page and click on the "Add tab" (+) button.
-  - In the pop-up that opens, click on "Manage apps".
-  - Click on "Upload a custom app" and upload the .zip file that was created in the previous steps. This adds the app to the meeting.
-  - Click on the "Add tab" button again. Now in the app selection page, the app should be visible as a "Meeting optimized tab".
-  - Select the Meeting Token app.
-  - Now the app will be visible in the meeting chat.
-  - Start the meeting and the icon should be visible in the meeting control bar.
+B) From an IDE:
+1. Launch Visual Studio
+2. File > Open > Project/Solution
+3. Navigate to the `TokenApp` folder
+4. Select `TokenApp.csproj` file
+5. Press `F5` to run the project
 
+### Step 5: Enable developer preview in your desktop Teams client
+Follow [these instructions](https://docs.microsoft.com/en-us/microsoftteams/platform/resources/dev-preview/developer-preview-intro#enable-developer-preview) to enable developer preview. Note that Developer preview mode must be enabled on each Teams client app or browser.
 
-## Deploy the bot to Azure
+> In-meeting tabs are only available in the Teams desktop client. They will not be visible when you run Teams in a web browser.
 
-To learn more about deploying a bot to Azure, see [Deploy your app to Azure](https://docs.microsoft.com/en-in/azure/app-service/quickstart-dotnetcore?pivots=platform-linux) for a complete list of deployment instructions.
+### Step 6: Sideload the app in a Teams desktop client
+1. Create a .zip using the below files, which are in the `Resources/Manifest` folder.
+  - manifest.json
+  - icon-outline.png
+  - icon-color.png
+1. Create a meeting with few test participants, ideally with a mix of Presenters and Attendees.
+1. Once meeting is created, go to the meeting details page and click on the "Add tab" (+) button.
+1. In the pop-up that opens, click on "Manage apps".
+1. Click on "Upload a custom app" and upload the .zip file that was created in the previous steps. This adds the app to the meeting.
+1. Click on the "Add tab" button again. Now in the app selection page, the app should be visible as a "Meeting optimized tab".
+1. Select the Meeting Token app.
+1. Now the app will be visible in the meeting chat.
+1. Start the meeting and the icon should be visible in the meeting control bar.
 
 ## Troubleshooting
-The app uses in-memory store to maintain token information and serviceurl. In the event of service restart, use the bot reset command to reset the app state to and restore the service url:
-- Using @mention to trigger the bot command:  `@[BotName] reset`
+The sample app uses an in-memory store to maintain token information and the service URL for the tenant. If you restart the project, you must run the following command to recapture the service URL: `@[BotName] reset`
+
+In your own projects, please use a durable storage mechanism to store the service URL for the tenant.
 
 ## Further reading
 
