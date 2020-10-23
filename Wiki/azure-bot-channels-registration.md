@@ -4,7 +4,7 @@ The resource group and the service plan aren't strictly necessary, but they allo
 
 You use a resource group to create individual resources for the Bot Framework. For performance, ensure that these resources are located in the same Azure region.
 
-1. In your browser, sign into the [**Azure portal**][azure-portal].
+1. In your browser, sign into the [Azure portal](https://portal.azure.com/).
 1. In the left navigation panel, select **Resource groups**.
 1. In the upper left of the displayed window, select **Add** tab to create a new resource group. You'll be prompted to provide the following:
     1. **Subscription**. Use your existing subscription.
@@ -13,12 +13,12 @@ You use a resource group to create individual resources for the Bot Framework. F
     1. Select the **Review and create** button. You should see a banner that reads *Validation passed*.
     1. Select the **Create** button. It may take a few minutes to create the resource group.
 
-> [!TIP]
+> **TIP:**
 > As with the resources you'll create later in this guide, it's a good idea to pin this resource group to your dashboard for easy access. If you'd like to do so, select the pin icon &#128204; in the upper right of the dashboard.
 
 ## Create the service plan
 
-1. In the [**Azure portal**][azure-portal], on the left navigation panel, select **Create a resource**.
+1. In the [Azure portal](https://portal.azure.com/), on the left navigation panel, select **Create a resource**.
 1. In the search box, type *App Service Plan*. Select the **App Service Plan** card from the search results.
 1. Select **Create**.
 1. You'll be asked to provide the following information:
@@ -35,14 +35,15 @@ You use a resource group to create individual resources for the Bot Framework. F
 
 The bot channels registration registers your web service as a bot with the Bot Framework, provided you have a Microsoft App Id and App password (client secret).
 
-> [!IMPORTANT]
-> You only need to register your bot if it is not hosted in Azure. If you [created a bot](/azure/bot-service/abs-quickstart?view=azure-bot-service-4.0&viewFallbackFrom=azure-bot-service-3.0&preserve-view=true) through the Azure portal then it is already registered with the service. If you created your bot through the [Bot Framework](https://dev.botframework.com/bots/new) or [AppStudio](~/concepts/build-and-test/app-studio-overview.md) your bot isn't registered in Azure.
+> **IMPORTANT:**
+> You only need to register your bot if it is not hosted in Azure. If you [created a bot](https://docs.microsoft.com/en-us/azure/bot-service/abs-quickstart?view=azure-bot-service-4.0&viewFallbackFrom=azure-bot-service-3.0&preserve-view=true) through the Azure portal then it is already registered with the service. If you created your bot through the [Bot Framework](https://dev.botframework.com/bots/new) or [AppStudio](https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/build-and-test/app-studio-overview) your bot isn't registered in Azure.
 
-1. In the [Azure portal](https://ms.portal.azure.com/#home), under Azure services, select **Create a resource**.
+1. In the [Azure portal](https://portal.azure.com/), under Azure services, select **Create a resource**.
 1. In the search box enter "bot". And in the drop-down list, select **Bot Channels Registration**.
 1. Select the **Create** button.
 1. In the **Bot Channel Registration** blade, provide the requested information about your bot.
-1. Leave the **Messaging endpoint** box empty for now, you will enter the required URL after deploying the bot. The following picture shows an example of the registration settings:
+1. In the **Messaging endpoint** box, use same ngrok endpoint created earlier and append `/api/messages` to that endpoint. Example: `https://f631****.ngrok.io/api/messages`. 
+    - The following picture shows an example of the registration settings:
 
     ![bot app channels registration](Images/auth-bot-channels-registration.png)
 
@@ -65,14 +66,14 @@ The bot channels registration registers your web service as a bot with the Bot F
 
 After Azure has created the registration resource it will be included in the resource group list.  
 
-![bot app channels registration group](Images/auth-bot-channels-registration-group.PNG)
+![bot app channels registration group](Images/auth-bot-channels-registration-group.png)
 
 Once your bot channels registration is created, you'll need to enable the Teams channel.
 
-1. In the [Azure portal](https://ms.portal.azure.com/#home), under Azure services, select the **Bot Channel Registration** you just created.
+1. In the [Azure portal](https://portal.azure.com/), under Azure services, select the **Bot Channel Registration** you just created.
 1. In the left panel, click **Channels**.
 1. Click the Microsoft Teams icon, then choose **Save**.
 
 
-> [!NOTE]
+> **NOTE:**
 > The Bot Channels Registration resource will show the **Global** region even if you selected West US. This is expected.

@@ -45,8 +45,8 @@
     
 Congratulations! You have completed the app registration prerequisites to proceed with your tab SSO app.     
 
-> [!NOTE]
+> **NOTE:**
 >
 > * ¹ If your Azure AD app is registered in the _same_ tenant where you're making an authentication request in Teams, the user won't be asked to consent and will be granted an access token right away. Users only need to consent to these permissions if the Azure AD app is registered in a different tenant.
-> * ² If you get an error stating that the domain is already owned and you are the owner, follow the procedure at [Quickstart: Add a custom domain name to Azure Active Directory](/azure/active-directory/fundamentals/add-custom-domain) to register the domain, and then repeat step 5, above. (This error can also occur if you aren't signed in with Admin credentials in the Office 365 tenancy).
+> * ² If you get an error stating that the domain is already owned and you are the owner, follow the procedure at [Quickstart: Add a custom domain name to Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/add-custom-domain) to register the domain, and then repeat step 5, above. (This error can also occur if you aren't signed in with Admin credentials in the Office 365 tenancy).
 > * If you are not receiving the UPN (User Principal Name) in the returned access token, you can add it as an [optional claim](https://docs.microsoft.com/azure/active-directory/develop/active-directory-optional-claims) in Azure AD.
